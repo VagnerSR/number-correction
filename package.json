@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
-  "homepage": "https://VagnerSR.github.io/my-number-correction",
+  "homepage": "https://vagnersr.github.io/my-number-correction",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
