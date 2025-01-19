@@ -1,35 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import NumberCorrection from "./components/NumberCorrection/NumberCorrection";
+import {
+  Divider,
+  Flex,
+  HStack,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import DigitCorrection from "./components/DigitCorrection/DigitCorrection";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const borderColor = useColorModeValue("black", "white");
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Header />
+      <Flex align="center" justify="center" direction="column" w="100%" >
+        <Flex fontSize="2xl" mt={8} >
+          <HStack gap="4">
+            <Link to="/">
+              <Text _hover={{ color: "blue.500", cursor: "pointer" }}>
+                Corrigir némero
+              </Text>
+            </Link>
+            <Divider
+              borderColor={borderColor}
+              orientation="vertical"
+              height={7}
+              borderWidth={1}
+            />
+            <Link to="/digit-correction">
+              <Text _hover={{ color: "blue.500", cursor: "pointer" }}>
+                Corrigir dígito
+              </Text>
+            </Link>
+          </HStack>
+        </Flex>
+        <Routes>
+          <Route path="/" element={<NumberCorrection />} />
+        </Routes>
+        <Routes>
+          <Route path="/digit-correction/" element={<DigitCorrection />} />
+        </Routes>
+      </Flex>
+      <Footer />
+    </Router>
+  );
 }
 
-export default App
+export default App;
