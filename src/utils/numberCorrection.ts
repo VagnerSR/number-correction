@@ -16,7 +16,6 @@ export function numberCorrection(
       const digit = 98n - modResult;
 
       if (digit === BigInt(target)) {
-        console.log(digit, target);
         return formatResult(numArray, Number(digit), focusStop);
       }
     }
