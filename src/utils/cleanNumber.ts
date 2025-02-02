@@ -8,16 +8,13 @@ export function cleanNumber(number: string) {
     );
   }
 
-  const modified = number
-    .replace(/-\d{2}/, "")
-    .concat("00")
-    .replace(/[-.]/g, "");
+  const modified = number.replace(/[-.]/g, "");
 
   const resultArray = modified.split("").map(Number);
 
   const focusIndex = resultArray.findIndex((num) => num !== 0);
 
-  const focusStop = number.indexOf("-") - 1;
+  const stopIndex = number.indexOf("-") - 1;
 
-  return { resultArray, target, focusIndex, focusStop };
+  return { resultArray, target, focusIndex, stopIndex };
 }

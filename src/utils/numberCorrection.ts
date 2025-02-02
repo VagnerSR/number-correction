@@ -1,26 +1,47 @@
 import { formatResult } from "./formatResult";
+import { validateNumber } from "./validateNumber";
 
 export function numberCorrection(
   numArray: number[],
-  target: number,
   focusIndex: number,
   focusStop: number
-) {
-  for (let i = focusIndex; i <= focusStop; i++) {
-    const original = numArray[i];
+): string {
+  if (focusIndex > focusStop) {
+    return numArray.join("");
+  }
 
-    for (let substitute = 0; substitute <= 9; substitute++) {
-      numArray[i] = substitute;
-      const currentNumber = BigInt(numArray.join(""));
-      const modResult = currentNumber % 97n;
-      const digit = 98n - modResult;
+  const original = numArray[focusIndex];
 
-      if (digit === BigInt(target)) {
-        return formatResult(numArray, Number(digit), focusStop);
-      }
+  for (let substitute = 0; substitute <= 9; substitute++) {
+    numArray[focusIndex] = substitute;
+    const currentNumber = numArray.join("");
+    const result = validateNumber({ numberCNJ: currentNumber });
+
+    if (result !== null) {
+      return formatResult(numArray);
+    }
+  }
+
+  numArray[focusIndex] = original;
+
+  if (focusIndex < focusStop) {
+    [numArray[focusIndex], numArray[focusIndex + 1]] = [
+      numArray[focusIndex + 1],
+      numArray[focusIndex],
+    ];
+
+    const swappedNumber = numArray.join("");
+    const result = validateNumber({ numberCNJ: swappedNumber });
+
+    if (result !== null) {
+      return formatResult(numArray);
     }
 
-    numArray[i] = original;
+    [numArray[focusIndex], numArray[focusIndex + 1]] = [
+      numArray[focusIndex + 1],
+      numArray[focusIndex],
+    ];
   }
-  return numArray.join("");
+
+  return numberCorrection(numArray, focusIndex + 1, focusStop);
 }
